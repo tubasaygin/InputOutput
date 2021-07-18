@@ -45,6 +45,7 @@ public class Main {
 
     public static void main(String[] args) {
         //Writing data to the file with using FileOutputStream:
+
         System.out.println("-------------------------------------");
 
         FileOutputStream fos = null;
@@ -83,7 +84,7 @@ public class Main {
             System.out.println("Value : " +(char)fis.read());
             System.out.println("Value : " +(char)fis.read());
             System.out.println("Value : " +(char)fis.read());
-             */
+            */
             //If we want to read a specific value directly
 
             fis.skip(5);
@@ -163,7 +164,95 @@ public class Main {
         } catch (IOException e) {
             System.out.println("Error creating file");
         }
+        System.out.println("-------------------------------------");
+        //Create a workout log file
+        System.out.println("Welcome to Workout Program ... ");
+        String workouts = "Valid Moves : \n" +
+                    "Burpee \n"+
+                    "Pushup \n"+
+                    "Situp \n"+
+                    "Squat \n";
+        System.out.println(workouts);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Create a workout : ");
+        System.out.println("Burpee number : ");
+        int burpee = scanner.nextInt();
+        System.out.println("Pushup Number : ");
+        int pushup = scanner.nextInt();
+        System.out.println("Situp Number : ");
+        int situp = scanner.nextInt();
+        System.out.println("Squat Number : ");
+        int squat = scanner.nextInt();
 
+        scanner.nextLine();
+        Workout workout = new Workout(burpee,pushup,situp,squat);
+        System.out.println("Your workout is starting... ");
+
+        int i = 1;
+        try(FileWriter writer2 = new FileWriter("log.txt")){
+            writer2.write("Workout Program... \n");
+            writer2.write("Burpee Number : "+workout.getBurpee_number() + "\n");
+            writer2.write("Pushup Number : "+workout.getPushup_number() + "\n");
+            writer2.write("Situp Number : "+workout.getSitup_number()+ "\n");
+            writer2.write("Squat Number : "+workout.getSquat_number() + "\n");
+
+            while(!(workout.isFinish())){
+                System.out.print("Movement Type(Burpee,Pushup,Situp,Squat) : ");
+                String type = scanner.nextLine();
+                System.out.print("How many of these moves will you do? ");
+                int number = scanner.nextInt();
+                scanner.nextLine();
+                workout.makeMove(type, number);
+
+                writer2.write(i + ".İşlem ---------->  Hareket : " + type + " Sayı : " + number + "\n");
+                i++;
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        System.out.println("The workout has been successfully completed." );
+
+
+        System.out.println("-------------------------------------");
+        //FileReader, BufferedReader, BufferedWriter :
+        //We created FileReader with scanner to be able to read line by line.
+        try(Scanner scanner2 = new Scanner(new FileReader("paragraph.txt"))){
+
+            while(scanner2.hasNextLine()){  //Are there any lines left to read?
+                System.out.println("Line : "+scanner2.nextLine());
+            }
+
+
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found.. ");
+        } catch (IOException e) {
+            System.out.println("Error opening file.. ");
+        }
+        //BufferedReader is more advantageous than FileReader.
+        try(Scanner scanner2 = new Scanner(new BufferedReader(new FileReader("paragraph.txt")))){
+
+            while(scanner2.hasNextLine()){  //Are there any lines left to read?
+                System.out.println("Line : "+scanner2.nextLine());
+            }
+
+
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found.. ");
+        } catch (IOException e) {
+            System.out.println("Error opening file.. ");
+        }
+
+        //BufferedWriter is more advantageous than FileWriter.
+        try(BufferedWriter writer3 = new BufferedWriter(new FileWriter("paragraph.txt",true))){
+            writer3.write("\nBut throw high dear sister, or we shall never hit the ceiling.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 }
