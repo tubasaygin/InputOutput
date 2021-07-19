@@ -1,0 +1,10 @@
+Amelia,80,80,50
+Olivia,43,45,68
+Isla,56,75,90
+Isabella,100,40,70
+Jessica,10,49,30
+George,95,56,90
+Thomas,100,100,98
+Harry,29,45,68
+Oliver,10,60,47
+Jacob,50,40,55
